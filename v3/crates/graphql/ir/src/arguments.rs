@@ -3,16 +3,14 @@ use std::collections::BTreeMap;
 use crate::error;
 use crate::filter;
 use graphql_schema::GDS;
-use graphql_schema::{
-    Annotation, ArgumentNameAndPath, ArgumentPresets, InputAnnotation, ModelInputAnnotation,
-};
+use graphql_schema::{Annotation, InputAnnotation, ModelInputAnnotation};
 use hasura_authn_core::SessionVariables;
 use lang_graphql::ast::common::Name;
 use lang_graphql::normalized_ast::{InputField, Value};
 use metadata_resolve::data_connectors::ArgumentPresetValue;
 use metadata_resolve::{
-    ArgumentKind, DataConnectorLink, Qualified, QualifiedBaseType, QualifiedTypeName,
-    QualifiedTypeReference, TypeMapping,
+    ArgumentKind, ArgumentNameAndPath, ArgumentPresets, DataConnectorLink, Qualified,
+    QualifiedBaseType, QualifiedTypeName, QualifiedTypeReference, TypeMapping,
 };
 use nonempty::NonEmpty;
 use open_dds::{
@@ -85,7 +83,7 @@ pub(crate) fn follow_field_path_and_insert_value(
 /// Takes 'ArgumentPresets' annotations, data connector link argument presets, and
 /// existing arguments (which might be partially filled), and fill values in the
 /// existing arguments based on the presets
-pub(crate) fn process_argument_presets<'s, 'a>(
+pub fn process_argument_presets<'s, 'a>(
     data_connector_link: &'s metadata_resolve::DataConnectorLink,
     type_mappings: &'s BTreeMap<Qualified<CustomTypeName>, TypeMapping>,
     argument_presets: Option<&'a ArgumentPresets>,
